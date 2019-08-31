@@ -1,0 +1,22 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validation-webhook-example-cfg
+  labels:
+    app: admission-webhook-example
+webhooks:
+  - name: required-labels.qikqiak.com
+    clientConfig:
+      service:
+        name: admission-webhook-example-svc
+        namespace: bigquant
+        path: "/test-lable"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM2akNDQWRLZ0F3SUJBZ0lCQVRBTkJna3Foa2lHOXcwQkFRc0ZBREFtTVNRd0lnWURWUVFEREJ0dmNHVnUKYzJocFpuUXRjMmxuYm1WeVFERTFNekF6TXprNU9USXdIaGNOTVRnd05qTXdNRFl5TmpNeVdoY05Nak13TmpJNQpNRFl5TmpNeldqQW1NU1F3SWdZRFZRUUREQnR2Y0dWdWMyaHBablF0YzJsbmJtVnlRREUxTXpBek16azVPVEl3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNtUFFKUm02cVdPTjRaeHd1UEh2YlEKelBuNWg5N21CSHozL1hEVVNrQUh3aXZ3aEN2bDlsQjdUbVVoSGxOOG43dUJxUGQ4Nk5JVWJ2dFZJcjFNckFSRQpBNFBmUVlDKzk1WUpNcUd6YVdDbXFmVXEwTzUzWEJNWEdqUjZKejQvNE4xVGl2VWtDWi80Sy9ISlR3WUJyd0YrCjc4WGt4QTRZYjJIUmtvQ00wTzJPa2Z3QmJHT1FkMjNydld1TmMzengzSEo0VUduZHlDeTljL0FITnhjNzZSalgKRTZBK1pyUCthbTRMWFQ4Ymg1WnVJMk5NdmdlUEtSaVJuRGFKV0tnUGxxR3NuYmdnY3QvNnZHMTNLU1dCcUxnQgpYeS9VRzJaNnZCcC82N1Y1SDJ6RWt4YjdRaS80VjhTNXFiTS83bDQ1UGwrOUczVjBvS1pLY1RLS1FUNWhQRy9MCkFnTUJBQUdqSXpBaE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQkFRQkI4Z1dRSnNQc2NPakhrNG5GR1pSd1VTc21aUzg4aDVRL0gzRjRySmhzNTRZNQp0MTBCRkdyRU9WSDAxeDdRUm9hVldNMnp0eUtreVp5QXZ6ZU41b3A0VnpsRWw4WmEyUXhUcUx4eTJ4ZlZ3K1VwCmRsd3NiT0prSHJMQnlqR0tVd2NkRHZzOUxzMVpJODVKaTl1MnpORXVDbktOcHRlNXBVeWIxQ3NhTUJMR0pZSkEKbXQvNnpoYUVTNno2ZHUrd2ZlOWp1dVhXYUE5aEVUdDVLZzBVNHQ5WHViRFRvK01jUkdZTHBFU29aYWlXMVRxbgpFRWJvdjhpSmZCSW5qWmp6UG5JeEQrcnl3VVY0ZkZJMWNBQU9XcWRacUs3bS8rS3pFWGVCVHFSdkhRbGpKRVl6ClVFYnpTMEU5djN5c3REK21pUElsajZoWlF5ekFMc1FtMlZWSi9CTWIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    rules:
+      - operations: [ "CREATE" ]
+        apiGroups: ["apps", ""]
+        apiVersions: ["v1"]
+        resources: ["deployments","services","pods"]
+    namespaceSelector:
+      matchLabels:
+        admission-webhook-example: enabled

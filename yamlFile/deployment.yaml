@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: admission-webhook-example-deployment
+  namespace: bigquant
   labels:
     app: admission-webhook-example
 spec:
@@ -16,14 +17,8 @@ spec:
     spec:
       containers:
         - name: admission-webhook-example
-          image: cnych/admission-webhook-example:v1
-          imagePullPolicy: Always
-          args:
-            - -tlsCertFile=/etc/webhook/certs/cert.pem
-            - -tlsKeyFile=/etc/webhook/certs/key.pem
-            - -alsologtostderr
-            - -v=4
-            - 2>&1
+          image: test/webhook:v1
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: webhook-certs
               mountPath: /etc/webhook/certs
